@@ -2,6 +2,7 @@ package com.miss.plugin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jump(View view) {
+
 
         Log.e("tpc", "宿主 点击 jump ");
 

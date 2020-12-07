@@ -1,0 +1,65 @@
+ActivityThread ---> scheduleLaunchActivity
+    sendMessage(H.LAUNCH_ACTIVITY, r)
+
+---> H Handler
+------> handleMessage{
+
+      case LAUNCH_ACTIVITY: {
+                        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
+                        final ActivityClientRecord r = (ActivityClientRecord) msg.obj;
+
+          -------------》  r.packageInfo = getPackageInfoNoCheck(
+                                r.activityInfo.applicationInfo, r.compatInfo);
+                        handleLaunchActivity(r, null, "LAUNCH_ACTIVITY");
+                        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+                    } break;
+
+
+ handleLaunchActivity(r, null, "LAUNCH_ACTIVITY");
+    --->     handleLaunchActivity(r, null, "LAUNCH_ACTIVITY");
+        ----->       Activity a = performLaunchActivity(r, customIntent);
+             ----->     ComponentName component = r.intent.getComponent();
+
+             所以 intent 在 r 中，r 是 ActivityClientRecord
+
+
+               final ActivityClientRecord r = (ActivityClientRecord) msg.obj;   r   由此获得
+
+
+               Hook handler
+
+
+    public void handleMessage(Message msg) {
+    }
+
+    /**
+     * Handle system messages here.
+     */
+    public void dispatchMessage(Message msg) {
+        if (msg.callback != null) {
+            handleCallback(msg);
+        } else {
+            if (mCallback != null) {
+                if (mCallback.handleMessage(msg)) {         如果能拿到 mCallback 我们就能拿到 msg ，系统的 mCallback 是空的
+                    return;
+                }
+            }
+            handleMessage(msg);
+        }
+    }
+
+ 创建 mCallBack 替换系统的 ---- 从而拿到 msg --- msg.obj --- > intent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
